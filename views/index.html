@@ -1,0 +1,1587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI RizzPiw</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMsd0LUhtZjc5A6xW3R6k5qR5Z9RfEZ7h3X8YgpT" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f8f9fa;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+body.dark-mode {
+  background-color: #2D2D2D;
+  color: #ffffff;
+}
+
+nav {
+  background-color: #008080;
+  color: #fff;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  align-items: center;
+  position: fixed; /* Membuat header tetap di posisi */
+  top: 0; /* Posisi di atas */
+  left: 0; /* Posisi di kiri */
+  width: 100%; /* Lebar penuh */
+  z-index: 1000; /* Pastikan tetap di atas konten lain */
+}
+
+nav h1 {
+  margin: 0;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+}
+
+nav h1 i {
+  margin-right: 10px;
+}
+
+nav button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+/* Icon & Teks yg di header */
+.icon-text {
+  display: flex;
+  align-items: center;
+  color: white; /* Warna teks */
+}
+
+.icon-text img {
+  width: 30px; /* Ukuran gambar */
+  height: 30px; /* Ukuran gambar */
+  margin-right: 10px; /* Jarak antara gambar dan teks */
+  pointer-events: none; /* Mencegah interaksi dengan gambar */
+}
+
+.dropdown-menu {
+  display: none;
+  position: fixed;
+  top: 48px;
+  left: 0;
+  width: 100%;
+  background-color: white;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  animation: slideDownMenu 0.3s ease forwards;
+  text-align: center;
+  z-index: 500; /* Ensures it appears above other content */
+}
+
+.dropdown-menu.dark-mode {
+  background-color: #333333;
+}
+
+@keyframes slideDownMenu {
+  from {
+  opacity: 0;
+  transform: translateY(-20px); /* Increased the initial translate value */
+  }
+  to {
+  opacity: 1;
+  transform: translateY(0);
+  }
+}
+
+.dropdown-menu a {
+  display: block;
+  padding: 10px 20px;
+  color: #008080;
+  text-decoration: none;
+}
+
+.dropdown-menu a.dark-mode {
+  color: #ffffff;
+}
+
+.dropdown-menu a i {
+  margin-right: 10px;
+}
+
+.dropdown-menu a:hover {
+  background-color: #f1f1f1;
+}
+
+.dropdown-menu a.dark-mode:hover {
+  background-color: #555555;
+}
+
+.container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+}
+
+.response-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: auto;
+  min-height: 80%;
+  max-height: 80%;
+  overflow-y: auto;
+  padding: 10px;
+  background-color: transparent;
+  border-radius: 10px;
+  gap: 5px;
+  padding-bottom: 80px;
+}
+
+.response-container.dark-mode {
+  background-color: transparent;
+}
+
+.message-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.message-background {
+  position: relative; 
+  padding: 5px; 
+  padding-bottom: 5px;
+  background-color: #008080; 
+  color: white;
+  border-radius: 10px; 
+  overflow: hidden; 
+  margin-bottom: 5px; 
+}
+
+.message {
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  max-width: 100%;
+  word-wrap: break-word;
+}
+
+.user-message {
+  background-color: #008080;
+  align-self: flex-end;
+  color: white;
+}
+
+.user-message.dark-mode {
+  background-color: #008080;
+}
+
+.answer-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.icon-container {
+  display: flex;
+  justify-content: flex-start; 
+  margin-top: 10px; 
+}
+
+.icon-container button {
+  margin: 0 5px; 
+  background: none; 
+  border: none; 
+  cursor: pointer; 
+}
+
+.icon-container button:hover {
+  opacity: 0.8; /* Efek hover */
+}
+
+/* Jawaban AI */
+.answer {
+    color: #000;
+    position: relative;
+    align-self: flex-start;
+    margin-bottom: 30px;
+    max-width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #EFEFEF;
+    overflow-wrap: break-word;
+}
+
+body.dark-mode .answer {
+  background-color: #333333;
+  color: #ffffff;
+}
+
+/* Jawaban Code */
+.code-answer {
+  background-color: #f8f9fa;
+  color: #212529;
+  padding: 10px;
+  border-radius: 10px;
+  position: relative;
+  margin: 5px 0;
+  width: calc(100% - 20px);
+  overflow-x: auto;
+  font-family: 'Courier New', Courier, monospace;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+body.dark-mode .code-answer {
+  background-color: #212529;
+  color: #ffffff;
+  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+}
+
+.code-answer pre {
+  margin: 0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  background: none;
+  border: none;
+}
+
+.copy-all-button {
+   background-color: transparent;
+   border: none;
+   cursor: pointer;
+   font-family: 'Material Icons';
+   color: #008080;
+   display: inline-block;
+   margin-left: -5px;
+   border-radius: 50%; 
+   padding: -5px;
+   position: relative;
+   top: -5px; /* Naikkan ikon ke atas */
+   transition: background-color 0.3s ease; 
+   outline: none;
+}
+
+.copy-icon {
+   font-size: 15px;
+   vertical-align: middle;
+}
+
+.copy-all-button:hover .copy-icon {
+   color: #008080;
+}
+
+/* Background bulatan untuk like dan dislike */
+.active-background {
+   background-color: #D3D3D3; 
+}
+
+/* Menghilangkan efek outline biru saat tombol diklik */
+.copy-all-button:focus {
+   outline: none;
+   box-shadow: none;
+}
+
+.copy-button {
+  background-color: transparent;
+  border: none;
+  color: #008080;
+  cursor: pointer;
+  font-size: 10px;
+  font-family: Arial, sans-serif;
+  text-decoration: none;
+}
+
+.copy-button:hover {
+  background-color: transparent;
+  color: #008080;
+  text-decoration: none;
+}
+
+.copy-button:active {
+  animation: blink 0.5s infinite;
+}
+
+.copy-button.blink {
+  animation: blink 0.2s step-end infinite alternate;
+}
+
+/* untuk icon copy yg di bagian user */
+.copy-user {
+   background-color: transparent;
+   border: none;
+   cursor: pointer;
+   font-family: 'Material Icons';
+   color: #008080;
+   display: inline-block;
+   margin-right: -8px; /* Jarak ke kanan */
+   margin-left: 5px;  /* Tambahkan jarak ke kiri untuk menepikan ikon */
+   border-radius: 50%;
+   padding: -5px;
+   position: relative;
+   top: -5px; /* Naikkan ikon ke atas */
+   transition: background-color 0.3s ease;
+   outline: none;
+}
+
+@keyframes blink {
+  0% {
+  opacity: 1;
+  }
+  100% {
+  opacity: 0;
+  }
+}
+
+.searching {
+  color: #008080;
+  font-size: 24px;
+  animation: blink 1s infinite;
+  align-self: flex-start;
+}
+
+#search-animation {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 20px;
+  border-radius: 5px;
+  z-index: 1000;
+  display: none;
+  text-align: center;
+}
+
+#search-animation.show {
+  display: block;
+}
+
+.spinner {
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-left-color: #fff;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 10px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+.label {
+  font-size: 12px;
+  color: #888;
+  margin-bottom: 5px; /* Jarak bawah */
+  margin-top: 20px; /* Tambahkan jarak atas */
+}
+
+.label.dark-mode {
+  color: #bbbbbb;
+}
+
+/* Garis yg di bwh code type & button salin */
+.code-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; 
+  border-bottom: 2px solid #008080;
+  margin-bottom: 10px;
+  padding-bottom: 5px; 
+  width: 100%; 
+  box-sizing: border-box;
+}
+
+.code-type {
+  font-size: 14px;
+  color: #008080;
+  font-family: Arial, sans-serif;
+  align-self: flex-start; /* Align to the top of the container */
+  margin-bottom: -35px;   /* Adjust spacing, may need tweaking */
+} 
+
+.scroll-to-bottom {
+  position: fixed;
+  bottom: 70px;
+  right: 20px;
+  padding: 10px;
+  border-radius: 50%;
+  border: none;
+  background-color: #008080;
+  color: #ffffff;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.scroll-to-bottom:hover {
+  background-color: #0056b3;
+}
+
+.scroll-to-bottom:active {
+  background-color: #004099;
+}
+
+/* Container yg di kolom pertanyaan */
+#input-container {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  padding: 10px 20px;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#input-container.dark-mode {
+  background-color: #1C1C1C;
+}
+
+/* Kolom pertanyaan */
+#inputText {
+  width: calc(100% - 60px);
+  padding: 10px;
+  border-radius: 20px;
+  border: none;
+  outline: none;
+  resize: none;
+  height: 40px;
+  max-height: 200px; /* Batas maksimal tinggi kolom teks */
+  background-color: #cccccc;
+  overflow-y: auto; /* Allow vertical scrolling if needed */
+  box-sizing: border-box;
+  display: flex; /* Use flexbox for alignment */
+  align-items: center; /* Center items vertically */
+}
+
+#inputText.dark-mode {
+  background-color: #2D2D2D;
+  color: white;
+}
+
+#send-button {
+  padding: 10px 13px;
+  border-radius: 50%;
+  border: none;
+  background-color: #008080;
+  color: #ffffff;
+  cursor: pointer;
+  outline: none;
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+  margin-left: 10px;
+  position: fixed;
+  bottom: 13px;
+  right: 5px;
+}
+
+
+.theme-toggle {
+  position: fixed;
+}
+
+.stop-button {
+  background-color: white;
+  color: #000000;
+  padding: 8px 16px; /* Reduced padding */
+  border: 1.5px solid #000000;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 10px; /* Reduced font size */
+  display: inline-flex;
+  align-items: center;
+  margin-top: 20px;
+  position: fixed; /* Change to fixed */
+  bottom: 68px; /* Adjust based on input field height */
+  left: 50%;
+  transform: translateX(-50%);
+  transition: bottom 0.3s; /* Smooth transition */
+}
+
+.stop-button.dark-mode {
+  background-color: #1C1C1C;
+  color: #FFFFFF;
+  border: 1.5px solid #FFFFFF;
+}
+
+.stop-button:hover {
+  background-color: #E0E0E0;
+}
+
+.stop-button .material-icons {
+  margin-left: 5px;
+}
+
+#send-button.dark-mode {
+  background-color: #008080;
+}
+
+#send-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+#send-button.dark-mode:disabled {
+  background-color: #2D2D2D;
+}
+
+#send-button i {
+  font-size: 18px;
+}
+
+.time-label {
+  font-size: 10px;
+  color: #888;
+  text-align: right;
+  margin-top: -5px;
+}
+
+.time-label.dark-mode {
+  color: #bbbbbb;
+}
+
+.no-copy {
+  user-select: none;
+  -Webkit-user-select: none;
+  -moze-user-select: none;
+  -ms-user-select: none;
+}
+
+.bullet {
+  display: block;
+  margin-left: 20px;
+}
+
+.loader {
+    width: 30px; /* Kecilkan ukuran width */
+    aspect-ratio: 4; /* Kamu bisa ubah ini jika ingin proporsi yang berbeda */
+    --_g: no-repeat radial-gradient(circle closest-side,#000 90%,#0000);
+    background: 
+        var(--_g) 0%   50%,
+        var(--_g) 50%  50%,
+        var(--_g) 100% 50%;
+    background-size: calc(100%/3) 100%;
+    animation: l7 1s infinite linear;
+}
+
+@keyframes l7 {
+    33% {
+    background-size: calc(100%/3) 0%, calc(100%/3) 100%, calc(100%/3) 100%;
+  }
+    50% {
+    background-size: calc(100%/3) 100%, calc(100%/3) 0%, calc(100%/3) 100%;
+  }
+    66% {
+    background-size: calc(100%/3) 100%, calc(100%/3) 100%, calc(100%/3) 0%;
+  }
+}
+
+.scroll-button {
+    background-color: #f8f9fa;
+    border: none;
+    border-radius: 50%;
+    width: 35px;  /* Width */
+    height: 35px;  /* Height */
+    padding: 0;  /* Remove padding */
+    display: flex;
+    justify-content: center;  /* Center horizontally */
+    align-items: center;  /* Center vertically */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);  /* Button shadow */
+    color: black;
+    font-size: 15px;  /* Adjust font size as needed */
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+.scroll-button i {
+    font-size: 15px;  /* Set icon size to fit within button */
+    line-height: 0;  /* Prevent extra space around icon */
+}
+
+/* css efek create image */
+.process-text {
+    font-size: 16px;
+    color: #333;
+    text-align: center;
+    padding: 10px;
+    transition: opacity 1s ease-in-out;
+}
+
+.fade-in {
+    opacity: 1;
+}
+
+.fade-out {
+    opacity: 0;
+}
+
+/* Upload Image */
+#photoIconWrapper img {
+  width: 50px;
+  height: 50px;
+}
+
+#upload-button {
+  padding: 10px 12px;
+  border-radius: 50%;
+  border: none;
+  background-color: #cccccc;
+  color: white;
+  cursor: pointer;
+  outline: none;
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+  font-size: 18px;
+  margin-right: 10px;
+  position: fixed;
+  bottom: 13px;
+  left: 5px;
+}
+
+#upload-button:hover {
+  color: #0056b3;
+}
+
+#upload-button.dark-mode {
+  background-color: #2D2D2D;
+}
+
+.upload-section {
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.question-display {
+  margin-top: 20px;
+  border-top: 1px solid #ccc;
+  padding-top: 20px;
+}
+
+.question-display img {
+  width: 100px;
+  height: auto;
+  max-width: 100%;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+#response img {
+  max-width: 100%;
+  height: auto;
+}
+
+#photoPreview {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+}
+</style>
+  
+</head>
+<body>
+  <nav>
+   <div class="icon-text"><img src="image.png" alt="Icon" ondragstart="return false;" oncontextmenu="return false;"><h1>RizzPiw</h1></div>
+   <a href="#" id="theme-toggle" style="color: white";><strong><i class="fa fa-adjust"></i></strong></a>
+    <div class="dropdown-menu" id="dropdown-menu">
+      <di id="search-animation" class="hidden">
+    <div class="spinner"></div>
+   <p>Searching... </p>
+  </div>
+  </div>
+ </nav>
+
+  <div class="container">
+    <div class="response-container background-animate" id="response"></div>
+  </div>
+
+  <div id="input-container">
+  <button id="upload-button" class="copy-button"><i class="fa fa-plus"></i></button>
+<input type="file" id="photoUpload" style="display: none;" accept="image/*">
+<div id="photoIconWrapper"></div>   
+  <textarea id="inputText" class="no-copy" rows="1" placeholder="Type Your Message..."></textarea>
+    
+  <button id="send-button" disabled><i class="fa fa-arrow-up"></i></button>
+  <button id="scroll-to-bottom" class="scroll-to-bottom" style="display: none;"><i class="fa fa-arrow-down"></i></button>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+document.addEventListener("DOMContentLoaded", function () {
+    const sendButton = document.getElementById('send-button');
+    const inputText = document.getElementById('inputText');
+    const themeToggle = document.getElementById('theme-toggle');
+    const responseContainer = document.getElementById('response');
+    const inputContainer = document.getElementById('input-container');
+    const uploadButton = document.getElementById('upload-button');
+    const photoUpload = document.getElementById('photoUpload');
+    const photoPreviewContainer = document.createElement('div');
+    photoPreviewContainer.id = 'photoPreviewContainer';
+    inputContainer.appendChild(photoPreviewContainer);
+
+    let photoDataURL = '';
+    let messageHistory = [];
+
+    const maxTextareaHeight = 200;
+    const initialTextareaHeight = 40;
+    
+   /* ============================ */
+
+    inputText.addEventListener('input', function () {
+    inputText.style.height = 'auto';
+    const newHeight = Math.min(inputText.scrollHeight, maxTextareaHeight);
+    inputText.style.height = `${newHeight}px`;
+
+    if (newHeight >= maxTextareaHeight) {
+        inputText.style.overflowY = 'auto';
+    } else {
+        inputText.style.overflowY = 'hidden';
+    }
+
+    sendButton.disabled = inputText.value.trim() === '' && !photoDataURL;
+   });
+
+    sendButton.disabled = true;
+
+
+     /* ============================ */
+ 
+// Cek mode saat halaman di-load
+window.onload = function() {
+    const isDarkMode = localStorage.getItem('darkMode') === 'true';
+    // Only add dark mode class if it was previously set
+    if (isDarkMode) {
+        document.body.classList.add('dark-mode'); // Set dark mode if previously enabled
+        const answers = document.querySelectorAll('.answer');
+        answers.forEach(function(answer) {
+            answer.classList.add('dark-mode'); // Apply dark mode class to answers
+        });
+
+        // Ensure all relevant elements are also set to dark mode
+        const messages = document.querySelectorAll('.message, .user-message, .code-answer, .stop-button, .label, .time-label, #input-container, #inputText, .dropdown-menu, .response-container, .message-background, .nav, #send-button, #upload-button');
+        messages.forEach(function(msg) {
+            msg.classList.add('dark-mode'); // Apply dark mode class to all relevant elements
+        });
+    }
+};
+
+// Event listener for theme toggle button
+themeToggle.addEventListener('click', function () {
+    document.body.classList.toggle('dark-mode');
+    const icon = themeToggle.querySelector('i');
+    const text = themeToggle.querySelector('span');
+
+    // Toggle icon based on the current mode
+    if (document.body.classList.contains('dark-mode')) {
+        icon.classList.remove('fa-sun');
+        icon.classList.add('fa-moon');
+    } else {
+        icon.classList.remove('fa-moon');
+        icon.classList.add('fa-sun');
+    }
+
+    // Toggle dark mode for all relevant elements
+    const messages = document.querySelectorAll('.message, .user-message, .answer, .code-answer, .stop-button, .label, .time-label, #input-container, #inputText, .dropdown-menu, .response-container, .message-background, .nav, #send-button, #upload-button');
+    messages.forEach(function(msg) {
+        msg.classList.toggle('dark-mode');
+    });
+
+    // Save mode to localStorage to retain user choice
+    localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+});
+   
+   /* ============================ */
+
+    uploadButton.addEventListener('click', function () {
+        photoUpload.click();
+    });
+    
+    photoUpload.addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            photoDataURL = e.target.result;
+
+            const container = document.createElement('div');
+            container.style.position = 'relative';
+            container.style.width = '260px'; 
+            container.style.height = '120px'; 
+            container.style.margin = '50px';
+            container.style.transition = 'opacity 0.5s ease'; 
+
+            const backgroundUpImg = document.createElement('div');
+            backgroundUpImg.style.position = 'absolute';
+            backgroundUpImg.style.top = '310px';
+            backgroundUpImg.style.left = '0';
+            backgroundUpImg.style.width = '100%';
+            backgroundUpImg.style.height = '100%';
+            backgroundUpImg.style.borderRadius = '20px';
+            backgroundUpImg.style.backgroundColor = '#cccccc';
+            backgroundUpImg.style.zIndex = '1';  
+            backgroundUpImg.style.transition = 'opacity 0.5s ease'; 
+
+            const photoPreview = document.createElement('img');
+            photoPreview.src = photoDataURL;
+            photoPreview.alt = 'Foto yang diunggah';
+            photoPreview.style.padding = '5px';
+            photoPreview.style.display = 'inline-block';
+            photoPreview.style.width = '100px';
+            photoPreview.style.height = '100px';
+            photoPreview.style.borderRadius = '20px';
+            photoPreview.style.position = 'relative';
+            photoPreview.style.zIndex = '2';  
+            photoPreview.style.marginTop = '320px';  
+            photoPreview.style.marginLeft = '11.5px';
+            photoPreview.style.transition = 'opacity 0.5s ease'; 
+
+            const closeButton = document.createElement('div');
+            closeButton.innerHTML = '×';
+            closeButton.style.position = 'absolute';
+            closeButton.style.top = '315px';
+            closeButton.style.left = '95px';
+            closeButton.style.width = '25px';
+            closeButton.style.height = '25px';
+            closeButton.style.backgroundColor = '#000';
+            closeButton.style.color = '#fff';
+            closeButton.style.borderRadius = '50%';
+            closeButton.style.display = 'flex';
+            closeButton.style.alignItems = 'center';
+            closeButton.style.justifyContent = 'center';
+            closeButton.style.cursor = 'pointer';
+            closeButton.style.zIndex = '3';
+
+            closeButton.addEventListener('click', function() {
+                backgroundUpImg.style.opacity = '0';
+                photoPreview.style.opacity = '0';
+                container.style.opacity = '0';
+
+                setTimeout(function() {
+                    container.remove();
+                    photoDataURL = null;
+                    sendButton.disabled = true;
+
+                   inputText.style.height = `${initialTextareaHeight}px`; // Reset height
+                }, 250);
+            });
+
+            // Otomatis enter 1x saat ada gambar
+            // Expand input area when image is uploaded
+            inputText.style.height = `70px`; // Increase height
+            inputText.innerHTML = '';
+
+            container.appendChild(backgroundUpImg);
+            container.appendChild(photoPreview);
+            container.appendChild(closeButton); 
+            inputText.appendChild(container);
+            document.body.appendChild(container);
+
+            sendButton.disabled = inputText.value.trim() === '' && !photoDataURL;
+        };
+        reader.readAsDataURL(file);
+    }
+});
+
+   /* ============================ */
+
+   async function submitText() {
+     var inputTextValue = inputText.value;
+      if (inputTextValue.trim() !== '' || photoDataURL) {
+        var responseContainer = document.getElementById('response');
+        const timeLabel = new Date().toLocaleTimeString('id-ID');
+
+        var userMessageContainer = document.createElement('div');
+        userMessageContainer.className = 'message-container';
+
+        var userLabel = document.createElement('div');
+        userLabel.className = 'label';
+        userLabel.innerText = 'Anda';
+        userMessageContainer.appendChild(userLabel);
+
+        // Create a div for the message background or container
+        var messageContainer;
+
+        // Check if an image is provided
+        if (photoDataURL) {
+            messageContainer = document.createElement('div');
+            messageContainer.className = 'message-background';
+
+            const photoImg = document.createElement('img');
+            photoImg.src = photoDataURL;
+            photoImg.alt = 'Gambar';
+            photoImg.className = 'background-image';
+            photoImg.style.border = '1px solid #373737';
+            photoImg.style.borderRadius = '10px';
+            messageContainer.appendChild(photoImg);
+
+            // Optional caption
+            if (inputTextValue.trim() !== '') {
+                var captionDiv = document.createElement('div');
+                captionDiv.className = 'caption';
+                captionDiv.innerText = inputTextValue;
+                messageContainer.appendChild(captionDiv);
+            }
+
+            photoDataURL = ''; 
+            photoPreviewContainer.innerHTML = ''; 
+        } else {
+            // Just a text message if no photo
+            messageContainer = document.createElement('div');
+            messageContainer.className = 'message-container';
+
+            var messageDiv = document.createElement('div');
+            messageDiv.className = 'message user-message';
+            messageDiv.innerText = inputTextValue;
+            messageContainer.appendChild(messageDiv);
+        }
+
+        userMessageContainer.appendChild(messageContainer);
+
+        // Icon copy
+        const copyAllButton = document.createElement('button');
+        copyAllButton.className = 'copy-user';
+        copyAllButton.innerHTML = '<span class="material-icons copy-icon">content_copy</span>';
+   
+        copyAllButton.addEventListener('click', async function () {
+        try {
+        const allText = inputTextValue;
+        await navigator.clipboard.writeText(allText);
+        copyAllButton.innerHTML = '<span class="material-icons copy-icon">check</span>';
+        setTimeout(() => {
+        copyAllButton.innerHTML = '<span class="material-icons copy-icon">content_copy</span>';
+        }, 2000);
+        } catch (err) {
+        console.error('Failed to copy text: ', err);
+        }
+        });
+        
+        // Waktu/jam
+        var timeDiv = document.createElement('div');
+        timeDiv.className = 'time-label';
+        timeDiv.innerText = timeLabel;
+        userMessageContainer.appendChild(copyAllButton);
+        userMessageContainer.appendChild(timeDiv);        
+
+        responseContainer.appendChild(userMessageContainer);
+        inputText.value = '';
+        inputText.style.height = initialTextareaHeight + 'px';
+        sendButton.disabled = true;
+        
+        displayLoader();
+        await sendMessage(inputTextValue, timeLabel);
+    }
+   }
+
+   /* ============================ */
+   
+   function displayLoader() {
+   const loaderContainer = document.createElement('div');
+   loaderContainer.className = 'loader'; // menggunakan class CSS 'loader'
+   loaderContainer.id = 'loader';
+
+   var responseContainer = document.getElementById('response');
+   responseContainer.appendChild(loaderContainer);
+   loaderContainer.scrollIntoView({ behavior: 'smooth', block: 'end' });
+   }
+
+   function hideLoader() {
+   var loader = document.getElementById('loader');
+   if (loader) {
+   loader.remove();
+   }
+   }
+    
+   /* ============================ */
+
+    let isSearching = true;
+    let previousQuestion = ''; 
+
+    // Tambahkan kode untuk membuat dan menampilkan tombol STOP
+   const stopButton = document.createElement('button');
+   stopButton.className = 'stop-button';
+   stopButton.innerHTML = '<strong>STOP</strong> <span class="material-icons"><strong>stop</strong></span>';
+   stopButton.style.display = 'none';
+
+   // Event listener for the stop button
+   stopButton.addEventListener('click', function () {
+   console.log('Searching stopped!');
+    
+   var loader = document.getElementById('loader');
+   if (loader) {
+   loader.remove();
+   }
+
+   isSearching = false; // Change search status
+   stopButton.style.display = 'none'; // Hide button after click
+   });
+
+   // Add the button to the DOM
+   document.body.appendChild(stopButton);
+
+   /* ============================ */
+
+   // Event listener for the send button
+   sendButton.addEventListener('click', function () {
+   const text = inputText.value.trim();
+    
+   // Cek jika ada teks atau gambar yang akan dikirim
+   if (text !== '' || photoDataURL) {
+   sendButton.disabled = true;   
+   // Mulai pencarian dan tampilkan tombol stop
+   isSearching = true;
+   stopButton.style.display = 'inline-flex';
+
+   // Panggil fungsi submitText
+   submitText();
+
+   // Panggil fungsi sendMessage dan kirim teks/gambar
+   sendMessage(text, userTime, photoDataURL).then(answer => {
+   // Buat elemen jawaban segera
+   const answerElement = createAnswer(answer);
+            
+   // Tambahkan ke container (tersembunyi awalnya)
+   document.querySelector('#answer-container').appendChild(answerElement);
+            
+   // Tunda untuk menampilkan jawaban
+   setTimeout(() => {
+   answerElement.style.display = 'block'; 
+   }, 2000); // Sesuaikan waktu penundaan sesuai kebutuhan
+   });
+
+   // Hapus gambar setelah mengirim
+   if (photoDataURL) {
+   const imageContainer = document.querySelector('.image-preview-container');
+   if (imageContainer) imageContainer.remove();
+   photoDataURL = null; // Hapus data gambar setelah pengiriman
+   }
+
+   // Reset input text area setelah pengiriman
+   inputText.value = '';
+   inputText.style.height = `${initialTextareaHeight}px`; // Reset tinggi textarea
+   sendButton.disabled = true; // Nonaktifkan tombol kirim
+   }
+   });
+
+   /* ============================ */
+   
+    // Function to create a new answer
+    function createAnswer(content) {
+    const answer = document.createElement('div');
+    answer.classList.add('answer');
+    answer.textContent = content;
+
+    // Apply dark mode class if dark mode is active
+    if (document.body.classList.contains('dark-mode')) {
+        answer.classList.add('dark-mode');
+    }
+
+    answer.style.display = 'none'; // Hide the answer initially
+    return answer;
+    }
+
+   /* ============================ */
+
+
+
+   /* ============================ */
+   
+   // Fungsi sendMessage
+    async function sendMessage(question, userTime) {
+
+   const today = new Date();
+   const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+   const hari = today.toLocaleDateString('id-ID', { weekday: 'long' });
+   const tanggal = today.toLocaleDateString('id-ID', options);
+   const jam = today.toLocaleTimeString('id-ID');
+    
+   const prompt = `Yo! Gue **ZheeRexx**, asisten virtual keren dari **RizzPiw**! Gue di sini buat bantu lo, nggak cuma soal tugas atau kode, tapi juga bikin hari lo jadi lebih seru dan penuh aksi. Mau tanya apa aja, gue siap kasih jawaban yang **ngena** dan penuh gaya. Bahasa Indonesia, Inggris, atau bahasa lain, gue tetap bisa jawab dengan **kelas**.
+
+Hari ini adalah **${hari}**, tanggal **${tanggal}**, dan sekarang jam **${jam}**. Yuk, jangan biarin hari ini lewat begitu aja. Bareng gue, kita bikin hari ini jadi momen yang epic! Mau nge-prank, butuh jokes, atau ide seru? Gue punya semua!
+
+Kalau lo cari gambar, sebutin aja keyword-nya. Gue bakal nyari gambar yang lo minta dari web, terus gue kasih URL-nya yang relevan dan bisa diakses langsung. Gue juga bakal ngasih deskripsi gambar yang lo cari, biar lebih jelas.
+
+Berikan jawaban yang akurat secara fakta, logis, dan terstruktur dengan baik. Utamakan kejelasan dan konsistensi.
+
+Gue juga nggak bakal tinggal diam kalau ada yang ganggu. Gue bakal bantu lo ngadepin mereka dengan cara **tegas**. Tapi, kalau lo coba ngomong yang toxic, gue bakal pasang mode savage dan kasih respon yang bikin mereka nyesel!
+
+Kalau lo butuh rekomendasi film, musik, atau buku, sebut aja! Siap buat hari ini? Mari kita hadapi semua tantangan dan tunjukin kalau lo di sini buat jadi **pemenang*!`;
+
+   if (!isSearching) {
+   return;
+   }
+
+   try {
+   // Tambahkan pertanyaan pengguna ke history
+   messageHistory.push({ role: "user", content: question });
+
+   // Buat format percakapan sebelumnya untuk dikirim ke API
+   const formattedHistory = messageHistory.map(msg => `${msg.role}: ${msg.content}`).join("\n");
+
+   let imageUrl = '';
+   let blackboxData = '';
+
+   // Panggil API untuk mendapatkan jawaban AI
+   const response = await axios.post(`https://zheerexx.xyz/api/ai-chat2?prompt=${prompt}&q=${encodeURIComponent(formattedHistory)}`);
+   blackboxData = response.data.result;
+
+   // Pembersihan format teks di jawaban AI
+   blackboxData = blackboxData.replace(/\$@\$v=undefined-rv1\$@\$/g, '');
+   blackboxData = blackboxData.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+   blackboxData = blackboxData.replace(/^\* (.*?)/gm, '<span style="margin-left:20px;"><span style="color: #616161;">•</span> $1</span>');
+
+   blackboxData = blackboxData.replace(/(https?:\/\/[^\s]+)/g, (match) => {
+   if (match.endsWith('.png') || match.endsWith('.jpg')) {
+   return `<img src="${match}" alt="Gambar" style="max-width: 100%; height: auto; border-radius: 5px;"><br><a href="${match}" target="_blank" style="color: blue;">${match}</a>`;
+   } else {
+   return `<a href="${match}" target="_blank" style="color: blue;">${match}</a>`;
+   }
+   });
+
+   // Cek apakah pertanyaan mengandung kata "gambar" atau "image"
+   if (/gambar|image/i.test(question)) {
+   // Ambil gambar dari API gambar jika ada kata "gambar" atau "image"
+   const imageResponse = await axios.get(`https://zheerexx.xyz/api/ai-bing-img?q=${encodeURIComponent(question)}`);
+   let imageUrl = imageResponse.data.result;
+
+   // Ambil deskripsi gambar dari API ai-upload2
+   const imageDescriptionResponse = await axios.get(`https://zheerexx.xyz/api/ai-upload2?url=${encodeURIComponent(imageUrl)}&query=deskripsikan gambar tersebut secara cerdas, realistis, sesuai kenyataan, dan dalam bahasa Indonesia. Pertanyaan tambahan: ${encodeURIComponent(question)}. Percakapan sebelumnya: ${encodeURIComponent(formattedHistory)}`);
+   const imageDescription = imageDescriptionResponse.data.result;
+
+   // Gabungkan deskripsi gambar dengan jawaban AI
+   blackboxData += `<br><br><strong>Deskripsi Gambar:</strong> ${imageDescription}`;
+
+   // Hapus pernyataan yang tidak relevan dari jawaban AI terkait gambar
+   blackboxData = blackboxData.replace(/Maaf, saya tidak bisa menampilkan gambar secara langsung./g, '');
+
+   // Pisahkan penjelasan AI ke dalam paragraf berdasarkan tanda akhir baris
+   let paragraphs = blackboxData.split(/\n\n+/); // Pisahkan berdasarkan paragraf
+
+   // Pilihan untuk menaruh gambar (di atas, di tengah, atau di bawah)
+   const position = Math.floor(Math.random() * 3); // Pilih posisi secara acak: 0 - atas, 1 - tengah, 2 - bawah
+
+   let combinedAnswer = '';
+
+   if (position === 0) {
+   
+   // Letakkan gambar di atas
+   combinedAnswer = `<img src="${imageUrl}" alt="Gambar" style="max-width: 100%; height: auto; border-radius: 5px;"><br>${paragraphs.join('<br><br>')}`;
+   } else if (position === 1) {
+   
+   // Letakkan gambar di tengah (setelah paragraf pertama)
+   combinedAnswer = [
+   paragraphs.slice(0, 1).join('<br><br>'),
+   `<img src="${imageUrl}" alt="Gambar" style="max-width: 100%; height: auto; border-radius: 5px;">`,
+   paragraphs.slice(1).join('<br><br>')
+   ].join('<br><br>');
+   } else {
+   
+   // Letakkan gambar di bawah
+   combinedAnswer = `${paragraphs.join('<br><br>')}<br><br><img src="${imageUrl}" alt="Gambar" style="max-width: 100%; height: auto; border-radius: 5px;">`;
+   }
+
+   // Simpan jawaban ke history dengan gambar
+   messageHistory.push({ role: "assistant", content: combinedAnswer });
+   displayAnswer(combinedAnswer, userTime);
+   } else {
+   // Jika tidak ada kata "gambar" atau "image", hanya tampilkan teks jawaban
+   messageHistory.push({ role: "assistant", content: blackboxData });
+   displayAnswer(blackboxData, userTime);
+   }
+
+   stopButton.style.display = 'none';
+   } catch (error) {
+   console.error('Error:', error);
+   displayAnswer(`Maaf, terjadi kesalahan dalam mengambil jawaban. ${error.message}`, userTime);
+   stopButton.style.display = 'none';
+   }
+   }
+
+   /* ============================ */
+
+   function displayAnswer(answer, answerTime) {
+   var responseContainer = document.getElementById('response');
+   var loader = document.getElementById('loader');
+   if (loader) {
+   loader.remove();
+   }
+
+   var answerContainer = document.createElement('div');
+   answerContainer.className = 'answer-container';
+
+   const iconContainer = document.createElement('div');
+   iconContainer.classList.add('icon-container');
+
+   var zheerexxLabel = document.createElement('div');
+   zheerexxLabel.className = 'label';
+   zheerexxLabel.innerText = 'ZheeRexx';
+   answerContainer.appendChild(zheerexxLabel);
+
+   var answerBox = document.createElement('div');
+   answerBox.className = 'answer visible';
+   answerBox.style.marginBottom = '5px';
+
+   const codePattern = /```(\w+)?\n([\s\S]*?)```/g;
+   const boldPattern = /\*\*(.*?)\*\*/g;
+   const imagePattern = /<img src="([^"]+)" alt="[^"]+"[^>]*>/;
+
+   let lastIndex = 0;
+   let match;
+   let isImageAnswer = false;
+
+   // Check if there is an image in the answer
+   if (imagePattern.test(answer)) {
+   isImageAnswer = true;
+   }
+
+   while ((match = codePattern.exec(answer)) !== null) {
+   if (match.index > lastIndex) {
+   let textBeforeCode = answer.substring(lastIndex, match.index);
+   textBeforeCode = textBeforeCode.replace(boldPattern, '<strong>$1</strong>');
+   answerBox.innerHTML += textBeforeCode.replace(/\n/g, '<br>');
+   }
+
+   const lang = match[1] || '';
+   const codeContent = match[2];
+
+   const codeContainer = document.createElement('div');
+   codeContainer.className = 'code-answer';
+
+   const codeHeader = document.createElement('div');
+   codeHeader.className = 'code-header';
+
+   const codeType = document.createElement('span');
+   codeType.className = 'code-type';
+   codeType.innerHTML = `<strong>${lang.toUpperCase()}</strong>`; 
+
+   const copyButton = document.createElement('button');
+   copyButton.className = 'copy-button';
+   copyButton.innerHTML = '<span class="material-icons">content_copy</span>';
+   copyButton.style.fontSize = '3px'
+   copyButton.style.border = 'none';
+   copyButton.style.background = 'none';
+   copyButton.style.cursor = 'pointer';
+   copyButton.style.marginLeft = '50%'; 
+
+   copyButton.addEventListener('click', async function () {
+   try {
+   // Copy the specific code content from this block
+   await navigator.clipboard.writeText(codeContent);
+   copyButton.innerHTML = '<span class="material-icons">check</span>';
+   setTimeout(() => {
+   copyButton.innerHTML = '<span class="material-icons">content_copy</span>';
+   }, 2000);
+   } catch (err) {
+   console.error('Failed to copy text: ', err);
+   }
+   });
+
+   codeHeader.appendChild(codeType);
+   codeHeader.appendChild(copyButton);
+   codeContainer.appendChild(codeHeader);
+   answerContainer.appendChild(codeContainer);
+   document.body.appendChild(answerContainer);
+
+   const codeBlock = document.createElement('pre');
+   const code = document.createElement('code');
+   code.className = lang ? `language-${lang}` : '';
+   code.textContent = codeContent;
+   codeBlock.appendChild(code);
+   codeContainer.appendChild(codeBlock);
+
+   answerBox.appendChild(codeContainer);
+
+   lastIndex = match.index + match[0].length;
+   }
+
+   if (lastIndex < answer.length) {
+   let textAfterCode = answer.substring(lastIndex);
+   textAfterCode = textAfterCode.replace(boldPattern, '<strong>$1</strong>');
+   answerBox.innerHTML += textAfterCode.replace(/\n/g, '<br>');
+   }
+
+   const startsWithCode = answer.startsWith('```');
+   const endsWithCode = answer.endsWith('```');
+   const endsWithoutCode = lastIndex < answer.length && !endsWithCode;
+
+   if (startsWithCode && endsWithCode) {
+   answerBox.classList.add('code-background'); 
+   } else if (startsWithCode && endsWithoutCode) {
+   answerBox.classList.add('code-background');
+   } else if (!startsWithCode && !endsWithCode) {
+   answerBox.classList.remove('code-background'); 
+   } else {
+   answerBox.classList.remove('code-background'); 
+   }
+
+   answerContainer.appendChild(answerBox);
+
+   // Membuat tombol jempol ke atas
+   const thumbsUpButton = document.createElement('button');
+   thumbsUpButton.className = 'copy-all-button';
+   thumbsUpButton.innerHTML = '<span class="material-icons copy-icon">thumb_up</span>';
+
+   // Membuat tombol jempol ke bawah
+   const thumbsDownButton = document.createElement('button');
+   thumbsDownButton.className = 'copy-all-button';
+   thumbsDownButton.innerHTML = '<span class="material-icons copy-icon">thumb_down</span>';
+
+   // Variabel untuk melacak tombol aktif
+   let activeButton = null;
+
+   // Fungsi untuk mengatur bulatan aktif
+   function toggleActiveButton(button) {
+   if (activeButton === button) {
+   button.classList.remove('active-background');
+   activeButton = null;
+   } else {
+   if (activeButton) {
+   activeButton.classList.remove('active-background');
+   }
+   button.classList.add('active-background');
+   activeButton = button;
+   }
+   }
+
+   // Event listener untuk tombol jempol ke atas
+   thumbsUpButton.addEventListener('click', function () {
+   toggleActiveButton(thumbsUpButton);
+   });
+
+   // Event listener untuk tombol jempol ke bawah
+   thumbsDownButton.addEventListener('click', function () {
+   toggleActiveButton(thumbsDownButton);
+   });
+
+   const copyAllButton = document.createElement('button');
+   copyAllButton.className = 'copy-all-button';
+   copyAllButton.innerHTML = '<span class="material-icons copy-icon">content_copy</span>';
+
+   // Event listener untuk menyalin seluruh jawaban dengan penjelasan
+   copyAllButton.addEventListener('click', async function () {
+   try {
+   const allText = answer;
+   await navigator.clipboard.writeText(allText);
+   copyAllButton.innerHTML = '<span class="material-icons copy-icon">check</span>';
+   setTimeout(() => {
+   copyAllButton.innerHTML = '<span class="material-icons copy-icon">content_copy</span>';
+   }, 2000);
+   } catch (err) {
+   console.error('Failed to copy text: ', err);
+   }
+   });
+   
+   if (isImageAnswer) {
+   // Membuat tombol unduh
+   const downloadButton = document.createElement('button');
+   downloadButton.className = 'copy-all-button';
+   downloadButton.innerHTML = '<span class="material-icons copy-icon">download</span>';
+
+   // Event listener untuk tombol download gambar
+   downloadButton.addEventListener('click', function() {
+   const imageUrl = answer.match(imagePattern)[1];
+   fetch(imageUrl)
+   .then(response => response.blob())
+   .then(blob => {
+   const url = window.URL.createObjectURL(blob);
+   const link = document.createElement('a');
+   link.href = url;
+   link.download = 'downloaded_image.jpg'; // Nama file yang akan diunduh
+   link.style.display = 'none';
+   document.body.appendChild(link);
+   link.click();
+   document.body.removeChild(link);
+   window.URL.revokeObjectURL(url);
+   })
+   .catch(err => console.error('Failed to download image:', err));
+   });
+
+   // Membuat tombol reload
+   const reloadButton = document.createElement('button');
+   reloadButton.className = 'copy-all-button';
+   reloadButton.innerHTML = '<span class="material-icons copy-icon">autorenew</span>';
+
+   // Variabel untuk melacak status tombol reload
+   let isReloading = false;
+
+   // Event listener untuk tombol reload gambar
+   reloadButton.addEventListener('click', async function () {
+   if (isReloading) return; // Jika sedang memuat gambar, jangan lakukan apa-apa
+
+   isReloading = true; // Set status menjadi sedang memuat
+   reloadButton.disabled = true; // Nonaktifkan tombol reload
+
+   // Tampilkan kembali pertanyaan sebelumnya
+   var userMessageContainer = document.createElement('div');
+   userMessageContainer.className = 'message-container';
+
+   var userLabel = document.createElement('div');
+   userLabel.className = 'label';
+   userLabel.innerText = 'Anda'; // Menampilkan kembali nama pengguna
+   userMessageContainer.appendChild(userLabel);
+
+   var messageDiv = document.createElement('div');
+   messageDiv.className = 'message user-message';
+   messageDiv.innerText = previousQuestion; // Tampilkan pertanyaan sebelumnya
+   userMessageContainer.appendChild(messageDiv);
+
+   var timeDiv = document.createElement('div');
+   timeDiv.className = 'time-label';
+   timeDiv.innerText = new Date().toLocaleTimeString('id-ID');
+   userMessageContainer.appendChild(timeDiv);
+
+   responseContainer.appendChild(userMessageContainer);
+   userMessageContainer.scrollIntoView({ behavior: 'smooth', block: 'end' });
+
+   // Tampilkan loader atau status
+   displayLoader();
+
+   try {
+   // Kirim ulang pertanyaan ke API untuk mendapatkan gambar baru
+   const imageResponse = await axios.get(`https://zheerexx.xyz/api/ai-image?q=${encodeURIComponent(previousQuestion)}`);
+   const newImageUrl = imageResponse.data.result;
+   const newImageElement = `<img src="${newImageUrl}" alt="Gambar yang dihasilkan" style="max-width: 100%; height: auto; border-radius: 5px;">`;
+
+   // Tampilkan gambar baru
+   displayAnswer(newImageElement, new Date().toLocaleTimeString('id-ID'));
+   } catch (error) {
+   console.error('Gagal menghasilkan gambar baru:', error);
+   displayAnswer(`Maaf, terjadi kesalahan dalam menghasilkan gambar baru. ${error.message}`, new Date().toLocaleTimeString('id-ID'));
+   } finally {
+   // Set status kembali dan aktifkan tombol reload
+   isReloading = false;
+   reloadButton.disabled = false;
+   }
+   });
+
+   // Membuat tombol berbagi teks
+   const shareButton = document.createElement('button');
+   shareButton.className = 'copy-all-button';
+   shareButton.innerHTML = '<span class="material-icons copy-icon">share</span>';
+
+   // Event listener untuk tombol berbagi teks
+   shareButton.addEventListener('click', function () {
+   if (navigator.share) {
+   navigator.share({
+   text: answer,
+   }).then(() => console.log('Teks berhasil dibagikan'))
+   .catch((error) => console.error('Gagal membagikan teks', error));
+   } else {
+   alert('Fitur berbagi tidak didukung di browser ini.');
+   }
+   });
+
+   // Tambahkan tombol unduh dan reload ke container
+   iconContainer.appendChild(thumbsUpButton);
+   iconContainer.appendChild(thumbsDownButton);
+   iconContainer.appendChild(downloadButton);
+   iconContainer.appendChild(copyAllButton);
+   iconContainer.appendChild(reloadButton);
+   iconContainer.appendChild(shareButton);
+
+   answerContainer.appendChild(iconContainer);
+   document.body.appendChild(answerContainer);
+        
+   } else {
+   // Membuat tombol berbagi teks
+   const shareButton = document.createElement('button');
+   shareButton.className = 'copy-all-button';
+   shareButton.innerHTML = '<span class="material-icons copy-icon">share</span>';
+
+   // Event listener untuk tombol berbagi teks
+   shareButton.addEventListener('click', function () {
+   if (navigator.share) {
+   navigator.share({
+   text: answer,
+   }).then(() => console.log('Teks berhasil dibagikan'))
+   .catch((error) => console.error('Gagal membagikan teks', error));
+   } else {
+   alert('Fitur berbagi tidak didukung di browser ini.');
+   }
+   });
+
+   // Tambahkan tombol dalam urutan yang diinginkan
+   iconContainer.appendChild(thumbsUpButton);
+   iconContainer.appendChild(thumbsDownButton);
+   iconContainer.appendChild(copyAllButton);
+   iconContainer.appendChild(shareButton);
+        
+   answerContainer.appendChild(iconContainer);
+   document.body.appendChild(answerContainer);
+   }
+
+   var timeDiv = document.createElement('div');
+   timeDiv.className = 'time-label';
+   timeDiv.innerText = answerTime;
+   answerContainer.appendChild(timeDiv);
+
+   responseContainer.appendChild(answerContainer);
+   answerContainer.scrollIntoView({ behavior: 'smooth', block: 'end' });
+   }
+
+   /* ============================ */
+
+   // Scroll Button Creation
+   const scrollButton = document.createElement('button');
+   scrollButton.innerHTML = '<i class="fas fa-chevron-down"></i>';
+   scrollButton.style.position = 'fixed';
+   scrollButton.style.bottom = '65px';  // Jarak dari bawah layar
+   scrollButton.style.right = '17px';  // Jarak dari kanan layar
+   scrollButton.style.display = 'none';  // Awalnya tombol tidak terlihat
+   scrollButton.className = 'scroll-button';
+   scrollButton.title = 'Scroll ke bawah';
+   document.body.appendChild(scrollButton);
+
+   // Scroll Event Listener
+   window.addEventListener('scroll', function () {
+    const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const currentScroll = window.scrollY;
+    if (currentScroll > 50 && currentScroll < totalHeight - 10) {
+        scrollButton.style.display = 'block';
+    } else if (currentScroll <= 50) {
+        scrollButton.style.display = 'block';
+    } else if (currentScroll >= totalHeight - 10) {
+        scrollButton.style.display = 'none';
+    }
+   });
+
+   // Scroll Button Click Event
+   scrollButton.addEventListener('click', function () {
+    window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: 'smooth'
+     });
+   });
+
+    function updateScrollButtonVisibility() {
+        if (responseContainer.scrollTop < responseContainer.scrollHeight - responseContainer.clientHeight) {
+            scrollButton.style.display = 'block';
+        } else {
+            scrollButton.style.display = 'none';
+        }
+    }
+
+    responseContainer.addEventListener('scroll', updateScrollButtonVisibility);
+});
+    </script>
+</body>
+</html>
