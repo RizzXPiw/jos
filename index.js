@@ -12,20 +12,12 @@ app.enable("trust proxy");
 app.set("json spaces", 2);
 app.use(cors());
 app.use(secure);
+app.use(express.static("public"));
 
-// Set public folder for static files
-app.use(express.static(path.join(__dirname, "public")));
-
-// Serve CSS and JS files from views folder
-app.use('/css', express.static(path.join(__dirname, 'views/css')));
-app.use('/js', express.static(path.join(__dirname, 'views/js')));
-
-// Serve index.html at /chat
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "views", "index.html"));
 });
 
-// Use /chat for API routes
 app.use("/api", apirouter);
 
 app.listen(PORT, () => {
