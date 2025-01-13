@@ -9,7 +9,6 @@ var cheerio = require("cheerio");
 var request = require("request");
 var fs = require("fs");
 var dns = require('dns');
-var ipRange = require('ip-range-check');
 var router = express.Router();
 var creator = global.creator;
 const listkey = global.apikey;
